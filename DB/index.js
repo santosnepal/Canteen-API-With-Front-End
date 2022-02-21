@@ -30,8 +30,8 @@ const userModel = users(sequelize,Sequelize.DataTypes);
 const roleModel = roles(sequelize,Sequelize.DataTypes);
 const usersrolesModel = users_roles(sequelize,Sequelize.DataTypes);
 
-userModel.belongsToMany(roleModel,{through:'user_roles'});
-roleModel.belongsToMany(userModel,{through:'user_roles'});
+userModel.belongsToMany(roleModel,{through:usersrolesModel});
+roleModel.belongsToMany(userModel,{through:usersrolesModel});
 db.user = userModel;
 db.role = roleModel;
 db.users_role = usersrolesModel;

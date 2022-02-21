@@ -5,4 +5,6 @@ const {userSchema} = require('../schemas/user.schema');
 module.exports = (app)=>{
     app.route('/api/users')
         .post(upload.single('image'),validator(userSchema),UserController.create);
+    app.route('/api/users')
+        .get(UserController.findAll);
 }
