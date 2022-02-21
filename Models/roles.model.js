@@ -7,8 +7,8 @@ module.exports = (sequelize,type) =>{
             autoIncrement:true,
             unique:true
           },
-          Name:{
-            type: type.ENUM("Admin", "User", "Staff"),
+          name:{
+            type: type.STRING(50),
             allowNull:false,
           }
     })

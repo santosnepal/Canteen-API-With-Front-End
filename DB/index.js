@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const users = require('../Models/users.model');
 const roles = require('../Models/roles.model');
+const users_roles = require('../Models/user_role.model');
 
 
 //database configurations
@@ -27,11 +28,13 @@ const sequelize = new Sequelize(DB_NAME,DB_USERNAME,DB_PASSWORD,{
 // defining many to many relation between user and role
 const userModel = users(sequelize,Sequelize.DataTypes);
 const roleModel = roles(sequelize,Sequelize.DataTypes);
+const usersrolesModel = users_roles(sequelize,Sequelize.DataTypes);
 
 userModel.belongsToMany(roleModel,{through:'user_roles'});
 roleModel.belongsToMany(userModel,{through:'user_roles'});
 db.user = userModel;
 db.role = roleModel;
+db.users_role = usersrolesModel;
 db.sequelize = sequelize;
 module.exports = db;
 
