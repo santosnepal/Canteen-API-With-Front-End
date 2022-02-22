@@ -31,7 +31,7 @@ class UserService {
       const role = {user_id:savedUser.id,role_id:4};
       await UserRoleService.create(role);
       const finalUser = await this.findByid(savedUser.id);
-      console.log(finalUser);
+      // console.log(finalUser);
       return finalUser;
     } catch (error) {
       return error;
