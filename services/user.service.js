@@ -1,5 +1,7 @@
 const { user, role } = require("../DB/index");
 const UserRoleService  = require('../services/user_roles.service');
+const bcrypt = require('bcrypt');
+const TokenGenerator = require('../middlewares/tokenGenerator');
 class UserService {
   async findByid(userId){
     try {
@@ -55,5 +57,29 @@ class UserService {
       return error;
     }
   }
+      async login(UserData){
+        try {
+            const {email,password} = UserData 
+            //get data of user from database
+            const savedData =  await user.findOne({
+               where:{email},
+            });
+            if(savedData === null){
+                return {success:false,message:'Wrong Credentials'}
+            }
+            //compare passord of user
+           const compared = await bcrypt.compare(password,savedData.password)
+           // console.log(compared)
+           if(compared){
+               const token =  TokenGenerator({id:savedData.id});
+               return {id:savedData.id,username:savedData.username,token}
+           }
+           else{
+               return {success:false,error:'Wrong Credentials'}
+           }
+        } catch (error) {
+            return error;
+        }
+    }
 }
 module.exports = new UserService();

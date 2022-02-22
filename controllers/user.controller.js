@@ -25,5 +25,15 @@ class UserController{
             next(error);
         }
     }
+    async login(req,res,next){
+        // console.log('here');
+        try {
+            const ud = await UserService.login(req.body);
+            // console.log(ud);
+            res.json(ud)
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 module.exports = new UserController();
