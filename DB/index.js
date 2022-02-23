@@ -4,6 +4,7 @@ const roles = require('../Models/roles.model');
 const users_roles = require('../Models/user_role.model');
 const category = require('../Models/category.model');
 const item = require('../Models/items.model');
+const order = require('../Models/order.model');
 
 
 //database configurations
@@ -27,15 +28,22 @@ const sequelize = new Sequelize(DB_NAME,DB_USERNAME,DB_PASSWORD,{
         underscored:true
     }
 });
-//making imported model into db odel
+//making imported model into db model
 const userModel = users(sequelize,Sequelize.DataTypes);
 const roleModel = roles(sequelize,Sequelize.DataTypes);
 const usersrolesModel = users_roles(sequelize,Sequelize.DataTypes);
 const categoryModel = category(sequelize,Sequelize.DataTypes);
 const itemModel = item(sequelize,Sequelize.DataTypes);
+const orderModel = order(sequelize,Sequelize.DataTypes);
 //relation between item and category  category-items one to many 
 categoryModel.hasMany(itemModel);
 itemModel.belongsTo(categoryModel);
+//relationship between user and order
+userModel.hasMany(orderModel);
+orderModel.belongsTo(userModel);
+//relationship between order and item
+itemModel.hasMany(orderModel);
+orderModel.belongsTo(itemModel);
 // defining many to many relation between user and role 
 userModel.belongsToMany(roleModel,{through:usersrolesModel});
 roleModel.belongsToMany(userModel,{through:usersrolesModel});
