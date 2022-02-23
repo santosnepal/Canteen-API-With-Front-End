@@ -16,16 +16,13 @@ module.exports = (app) => {
   app
     .route("/api/orders")
     .get(
-      passport.authenticate(
-        "jwt",
-        { session: false },
-        isAdmin,
-        OrderController.getAllRemainingOrder
-      )
+      passport.authenticate("jwt", { session: false }),
+      isAdmin,
+      OrderController.getAllRemainingOrder
     );
   //change order status only admin or staff
   app
-    .route("/api/orders/complete")
+    .route("/api/orders/complete/:orderId")
     .post(
       passport.authenticate("jwt", { session: false }),
       isAdmin,

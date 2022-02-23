@@ -1,4 +1,4 @@
-const { order, user } = require("../DB/index");
+const { order, user, item } = require("../DB/index");
 class UserService {
   async create(orderData) {
     try {
@@ -47,13 +47,21 @@ class UserService {
     try {
       const orders = await order.findAll({
         where: { status: false },
-        include: {
-          model: user,
-          attributes: ["id", "name"],
-        },
+        include: [
+          {
+            model: user,
+            attributes: ["id", "name"],
+          },
+          {
+            model: item,
+            attributes: ["id", "name"],
+          },
+        ],
+        attributes: ["id", "quantity"],
       });
       return orders;
     } catch (error) {
+      //   console.log(error);
       return error;
     }
   }

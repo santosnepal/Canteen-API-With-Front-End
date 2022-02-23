@@ -15,8 +15,10 @@ class OrderController {
     try {
       const whichOrder = req.params.orderId;
       const found = await OrderService.findById(whichOrder);
-      if (!found.length) {
-        res
+      console.log(found);
+      //   console.log(found.length);
+      if (found === null) {
+        return res
           .status(404)
           .json({ status: false, message: "The order is not avilable" });
       }
