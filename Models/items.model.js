@@ -25,8 +25,9 @@ module.exports = (sequelize, type) => {
       allowNull: false,
     },
     avilability: {
-      type: type.INTEGER,
+      type: type.BOOLEAN,
       allowNull: false,
+      default:true
     },
   });
 };

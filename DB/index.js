@@ -43,6 +43,7 @@ db.user = userModel;
 db.role = roleModel;
 db.users_role = usersrolesModel;
 db.category = categoryModel;
+db.item = itemModel;
 db.sequelize = sequelize;
 module.exports = db;
 

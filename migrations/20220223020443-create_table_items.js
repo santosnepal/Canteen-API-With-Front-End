@@ -28,7 +28,7 @@ module.exports = {
         allowNull: false,
       },
       avilability: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
       },
       created_at: {
