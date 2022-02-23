@@ -15,8 +15,6 @@ class OrderController {
     try {
       const whichOrder = req.params.orderId;
       const found = await OrderService.findById(whichOrder);
-      console.log(found);
-      //   console.log(found.length);
       if (found === null) {
         return res
           .status(404)
