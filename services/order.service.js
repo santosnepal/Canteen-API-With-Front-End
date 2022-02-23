@@ -15,9 +15,12 @@ class UserService {
                     id:which
                 }
             });
-            found.status = true;
+            found.status = !found.status;
             await found.save();
-            return{status:'completed',message:'The order has been completed and deliverd to customer'}
+            if(found.status){
+                return{status:'completed',message:'The order has been completed and deliverd to customer'}
+            }
+            return{status:'not completed',message:'The order has been marked as not completed'}
         } catch (error) {
             return error;
         }
