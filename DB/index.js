@@ -60,5 +60,6 @@ db.users_role = usersrolesModel;
 db.category = categoryModel;
 db.item = itemModel;
 db.order = orderModel;
+db.credit_account = creditAccountModel;
 db.sequelize = sequelize;
 module.exports = db;
