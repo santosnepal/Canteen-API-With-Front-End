@@ -25,12 +25,10 @@ class CreditAccountService {
                   "id",
                   "name",
                   "price",
-                  //   [sequelize.literal(`(quantity*price)`), "total"],
                 ],
               },
             ],
           },
-          //   [sequelize.literal(`(quantity*price)`), "total"],
         ],
         attributes: [
           "id",
@@ -38,10 +36,8 @@ class CreditAccountService {
           [sequelize.literal(`(quantity*price)`), "total"],
         ],
       });
-      console.log("hello", creditAmt);
       return creditAmt;
     } catch (error) {
-      console.log(error);
       return error;
     }
   }

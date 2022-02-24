@@ -24,9 +24,7 @@ class CreditAccountController {
   async findHisCredit(req, res, next) {
     try {
       const whose = req.body.userId;
-      //   console.log("userId", whose);
       const creditObject = await CreditAccountService.findByUserId(whose);
-      //   console.log(creditObject);
       res.status(200).json(creditObject);
     } catch (error) {
       next(error);
