@@ -67,5 +67,6 @@ db.category = categoryModel;
 db.item = itemModel;
 db.order = orderModel;
 db.credit_account = creditAccountModel;
+db.paid_account = paidAccountModel;
 db.sequelize = sequelize;
 module.exports = db;
