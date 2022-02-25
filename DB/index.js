@@ -6,6 +6,7 @@ const category = require("../Models/category.model");
 const item = require("../Models/items.model");
 const order = require("../Models/order.model");
 const credit_account = require("../Models/credit_account.model");
+const paid_account = require("../Models/paid_account.model");
 
 //database configurations
 const DB_USERNAME = "postgres";
@@ -36,6 +37,7 @@ const categoryModel = category(sequelize, Sequelize.DataTypes);
 const itemModel = item(sequelize, Sequelize.DataTypes);
 const orderModel = order(sequelize, Sequelize.DataTypes);
 const creditAccountModel = credit_account(sequelize, Sequelize.DataTypes);
+const paidAccountModel = paid_account(sequelize, Sequelize.DataTypes);
 //relation between item and category  category-items one to many
 categoryModel.hasMany(itemModel);
 itemModel.belongsTo(categoryModel);
@@ -51,6 +53,10 @@ creditAccountModel.belongsTo(orderModel);
 //relation between credit_account and user
 userModel.hasMany(creditAccountModel);
 creditAccountModel.belongsTo(userModel);
+//relationship between user and paid account
+userModel.hasMany(paidAccountModel);
+paidAccountModel.belongsTo(userModel);
+
 // defining many to many relation between user and role
 userModel.belongsToMany(roleModel, { through: usersrolesModel });
 roleModel.belongsToMany(userModel, { through: usersrolesModel });
