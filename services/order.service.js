@@ -1,4 +1,5 @@
 const { order, user, item } = require("../DB/index");
+const credit_accountService = require("./credit_account.service");
 class UserService {
   async create(orderData) {
     try {
@@ -30,14 +31,21 @@ class UserService {
       found.status = !found.status;
       await found.save();
       if (found.status) {
+        await credit_accountService.create({
+          user_id: found.user_id,
+          order_id: found.id,
+        });
         return {
           status: "completed",
-          message: "The order has been completed and deliverd to customer",
+          message:
+            "The order has been completed and deliverd to customer and amount recorded in credit",
         };
       }
+      await credit_accountService.deleteByOrderId(found.id);
       return {
         status: "not completed",
-        message: "The order has been marked as not completed",
+        message:
+          "The order has been marked as not completed and amount removed from credit",
       };
     } catch (error) {
       return error;

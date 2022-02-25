@@ -1,10 +1,25 @@
 const OrderService = require("../services/order.service");
+const ItemService = require("../services/item.service");
 class OrderController {
   async create(req, res, next) {
     try {
       const orderData = req.body;
       orderData.user_id = req.user.id;
       orderData.status = false;
+      const avilable = await ItemService.findById(req.body.item_id);
+      console.log(avilable);
+      if (avilable === null) {
+        return res.status(404).json({
+          status: false,
+          message: "The item is  not avilable to order2",
+        });
+      }
+      if (!avilable.dataValues.avilability) {
+        return res.status(404).json({
+          status: false,
+          message: "The item is  not avilable to order1",
+        });
+      }
       const savedOrder = await OrderService.create(orderData);
       res.status(200).json(savedOrder);
     } catch (error) {

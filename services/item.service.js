@@ -38,7 +38,7 @@ class ItemService {
   }
   async findById(iid) {
     try {
-      const items = item.findAll({
+      const items = item.findOne({
         where: { id: iid },
         include: {
           model: category,

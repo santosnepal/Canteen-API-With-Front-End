@@ -21,11 +21,7 @@ class CreditAccountService {
             include: [
               {
                 model: item,
-                attributes: [
-                  "id",
-                  "name",
-                  "price",
-                ],
+                attributes: ["id", "name", "price"],
               },
             ],
           },
@@ -37,6 +33,18 @@ class CreditAccountService {
         ],
       });
       return creditAmt;
+    } catch (error) {
+      return error;
+    }
+  }
+  async deleteByOrderId(orderId) {
+    try {
+      await credit_account.destroy({
+        where: {
+          order_id: orderId,
+        },
+      });
+      return { message: "removed" };
     } catch (error) {
       return error;
     }
