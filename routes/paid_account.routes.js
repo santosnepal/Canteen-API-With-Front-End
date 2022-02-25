@@ -6,7 +6,7 @@ const passport = require("passport");
 module.exports = (app) => {
   //add money by a user in db only avilable to admin
   app
-    .route("/api/paidaccount")
+    .route("/api/paidaccounts")
     .post(
       passport.authenticate("jwt", { session: false }),
       isAdmin,
@@ -15,14 +15,14 @@ module.exports = (app) => {
     );
   //get loginned user paid amount
   app
-    .route("/api/paidaccount/get")
+    .route("/api/paidaccounts/get")
     .get(
       passport.authenticate("jwt", { session: false }),
       PaidAccountController.findMyPaidHistory
     );
   //get a paid amount detail of a user by only admin
   app
-    .route("/api/paidaccount/get/:userId")
+    .route("/api/paidaccounts/get/:userId")
     .get(
       passport.authenticate("jwt", { session: false }),
       isAdmin,
