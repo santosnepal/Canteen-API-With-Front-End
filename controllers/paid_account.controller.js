@@ -23,7 +23,7 @@ class PaidAccountController {
   //get all paid amount detail of a user by admin or staff
   async findHisPaidHistory(req, res, next) {
     try {
-      const whose = req.body.userId;
+      const whose = req.params.userId;
       const details = await PaidAccountService.findByUserId(whose);
       res.status(200).json(details);
     } catch (error) {
