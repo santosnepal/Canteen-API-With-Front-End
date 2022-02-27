@@ -3,6 +3,7 @@ const { sequelize } = require("./DB/index");
 const { initRoutes } = require("./routes");
 const passport = require("passport");
 require("./middlewares/passport.auth");
+const HttpException = require("./exceptions/httpException");
 const app = express();
 app.use(express.json());
 app.use(passport.initialize());
