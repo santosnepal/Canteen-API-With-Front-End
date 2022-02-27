@@ -1,13 +1,20 @@
 const express = require("express");
+const app = express();
+const cors = require("cors");
 const { sequelize } = require("./DB/index");
 const { initRoutes } = require("./routes");
 const passport = require("passport");
+const { Server, Socket } = require("socket.io");
+const { initSocket } = require("./utils/notification.utils");
 require("./middlewares/passport.auth");
+const http = require("http");
+const server = http.createServer(app);
 const HttpException = require("./exceptions/httpException");
-const app = express();
 app.use(express.json());
 app.use(passport.initialize());
+app.use(cors());
 initRoutes(app);
+//connecting to sequelize database
 sequelize
   .authenticate()
   .then(() => {
@@ -30,6 +37,7 @@ app.use((req, res, next) => {
   );
   next(err);
 });
+//global error handler
 app.use((err, req, res, next) => {
   err.success = false;
   err.status = err.status || 500;
@@ -42,6 +50,15 @@ app.use((err, req, res, next) => {
     data: err.data,
   });
 });
-app.listen(9001, () => {
+//opening server to listen on port 9001
+server.listen(9001, () => {
   console.log("Server started at localhost:9001");
 });
+//socket io socket server
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+initSocket(io);

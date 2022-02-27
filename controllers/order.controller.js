@@ -7,7 +7,7 @@ class OrderController {
       orderData.user_id = req.user.id;
       orderData.status = false;
       const avilable = await ItemService.findById(req.body.item_id);
-      console.log(avilable);
+      // console.log(avilable);
       if (avilable === null) {
         return res.status(404).json({
           status: false,
@@ -21,6 +21,7 @@ class OrderController {
         });
       }
       const savedOrder = await OrderService.create(orderData);
+      // console.log(savedOrder);
       res.status(200).json(savedOrder);
     } catch (error) {
       next(error);

@@ -1,9 +1,13 @@
 const { order, user, item } = require("../DB/index");
 const credit_accountService = require("./credit_account.service");
+const { send } = require("../utils/notification.utils");
 class UserService {
   async create(orderData) {
     try {
       const savedOrder = await order.create(orderData);
+      // console.log(send);
+      send(savedOrder);
+      // console.log(send);
       return savedOrder;
     } catch (error) {
       return error;
