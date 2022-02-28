@@ -7,14 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="index.js"></script>
     <title>Socket-io checking</title>
   </head>
   <body>
     <div id="first">
-      <h1>Hello user</h1>
-      <input id="user" type="text" />
-      <button onclick="connect()">Connect</button>
+      <h1>Username</h1>
+      <input id="username" type="text" />
+      <h1>Password</h1>
+      <input id="password" type="password" />
+      <button onclick="login()">Connect</button>
     </div>
   </body>
 </html>

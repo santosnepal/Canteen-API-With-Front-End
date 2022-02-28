@@ -1,5 +1,7 @@
 const OrderService = require("../services/order.service");
 const ItemService = require("../services/item.service");
+const { send } = require("../utils/notification.utils");
+const { sendStatus } = require("express/lib/response");
 class OrderController {
   async create(req, res, next) {
     try {
@@ -21,6 +23,9 @@ class OrderController {
         });
       }
       const savedOrder = await OrderService.create(orderData);
+      const newOrder = await OrderService.findById(savedOrder.id);
+      console.log(newOrder);
+      send(newOrder);
       // console.log(savedOrder);
       res.status(200).json(savedOrder);
     } catch (error) {

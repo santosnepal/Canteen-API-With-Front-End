@@ -1,13 +1,9 @@
 const { order, user, item } = require("../DB/index");
 const credit_accountService = require("./credit_account.service");
-const { send } = require("../utils/notification.utils");
 class UserService {
   async create(orderData) {
     try {
       const savedOrder = await order.create(orderData);
-      // console.log(send);
-      send(savedOrder);
-      // console.log(send);
       return savedOrder;
     } catch (error) {
       return error;
@@ -15,10 +11,21 @@ class UserService {
   }
   async findById(oid) {
     try {
-      const found = order.findOne({
+      const found = await order.findOne({
         where: {
           id: oid,
         },
+        include: [
+          {
+            model: user,
+            attributes: ["id", "name"],
+          },
+          {
+            model: item,
+            attributes: ["id", "name"],
+          },
+        ],
+        attributes: ["id", "quantity"],
       });
       return found;
     } catch (error) {
