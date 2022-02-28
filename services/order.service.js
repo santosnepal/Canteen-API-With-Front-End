@@ -25,7 +25,7 @@ class UserService {
             attributes: ["id", "name"],
           },
         ],
-        attributes: ["id", "quantity"],
+        attributes: ["id", "quantity", "status"],
       });
       return found;
     } catch (error) {
@@ -81,6 +81,16 @@ class UserService {
       return orders;
     } catch (error) {
       //   console.log(error);
+      return error;
+    }
+  }
+  async deletedAOreder(orderId) {
+    try {
+      await order.destroy({
+        where: { id: orderId },
+      });
+      return { success: true, message: "The Order has been removed" };
+    } catch (error) {
       return error;
     }
   }

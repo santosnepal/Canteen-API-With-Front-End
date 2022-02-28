@@ -28,4 +28,11 @@ module.exports = (app) => {
       isAdmin,
       OrderController.changeStatus
     );
+  //delete a order only by admin or orderer user
+  app
+    .route("/api/orders/delete")
+    .post(
+      passport.authenticate("jwt", { session: false }),
+      OrderController.deleteAOrder
+    );
 };
