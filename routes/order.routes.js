@@ -35,4 +35,11 @@ module.exports = (app) => {
       passport.authenticate("jwt", { session: false }),
       OrderController.deleteAOrder
     );
+  //modify a order only by who post the order
+  app
+    .route("/api/orders/modify/:orderId")
+    .post(
+      passport.authenticate("jwt", { session: false }),
+      OrderController.modifyOrder
+    );
 };

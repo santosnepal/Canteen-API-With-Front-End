@@ -87,5 +87,35 @@ class OrderController {
       next(error);
     }
   }
+  async modifyOrder(req, res, next) {
+    try {
+      const which = await OrderService.findById(req.params.orderId);
+      if (which === null) {
+        return res.status(404).json({
+          status: false,
+          message: "The order is not avilable to modify",
+        });
+      }
+      if (which.status === true) {
+        return res.status(404).json({
+          status: false,
+          message: "The order is not avilable to modfy",
+        });
+      }
+      if (req.user.id !== which.user.id) {
+        throw new ValidationException(422, "Not Authorized", null);
+      }
+      const modifiedOrder = await OrderService.modifyOrder(
+        req.params.orderId,
+        req.body
+      );
+      const newOrder = await OrderService.findById(modifiedOrder.id);
+      send(newOrder);
+      res.status(200).json(newOrder);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
 }
 module.exports = new OrderController();

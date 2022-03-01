@@ -94,5 +94,20 @@ class UserService {
       return error;
     }
   }
+  async modifyOrder(orderId, orderData) {
+    try {
+      const which = await order.findOne({
+        where: {
+          id: orderId,
+        },
+      });
+      which.quantity = orderData.quantity || which.quantity;
+      which.item_id = orderData.item_id || which.item_id;
+      const modifiedOrder = await which.save();
+      return modifiedOrder;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 module.exports = new UserService();
