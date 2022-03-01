@@ -69,6 +69,12 @@ class OrderController {
           message: "The order is not avilable to delete",
         });
       }
+      if (which.status === true) {
+        return res.status(404).json({
+          status: false,
+          message: "The order is not avilable to delete",
+        });
+      }
       const is_admin = await isAdmin(req.user.id);
       if (is_admin || which.user.id === req.user.id) {
         console.log("is admin", isAdmin);

@@ -15,6 +15,7 @@ class UserService {
             through: {
               attributes: [],
             },
+            attributes: ["id", "name"],
             // attributes:[{exclude:['created_at','updated_at','id']}]
           },
         ],
@@ -80,6 +81,35 @@ class UserService {
       } else {
         return { success: false, error: "Wrong Credentials" };
       }
+    } catch (error) {
+      return error;
+    }
+  }
+  async editUser(userId, data) {
+    try {
+      const which = await user.findOne({
+        where: { id: userId },
+      });
+      which.name = data.name || which.name;
+      which.email = data.email || which.email;
+      which.phone_no = data.phone_no || which.phone_no;
+      which.profile_pic = data.profile_pic || which.profile_pic;
+      const edited = await which.save();
+      return edited;
+    } catch (error) {
+      return error;
+    }
+  }
+  async changePassword(userId, newPassword) {
+    try {
+      const which = await user.findOne({
+        where: {
+          id: userId,
+        },
+      });
+      which.password = newPassword;
+      await which.save();
+      return { success: true, message: "Password Changed Successfully" };
     } catch (error) {
       return error;
     }
