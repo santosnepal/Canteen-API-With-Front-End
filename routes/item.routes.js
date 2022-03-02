@@ -35,4 +35,12 @@ module.exports = (app) => {
       passport.authenticate("jwt", { session: false }),
       ItemController.findById
     );
+  //modify a item only avilable to admin
+  app
+    .route("/api/items/modify/:itemId")
+    .post(
+      passport.authenticate("jwt", { session: false }),
+      isAdmin,
+      ItemController.modifyItem
+    );
 };

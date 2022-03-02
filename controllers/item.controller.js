@@ -49,5 +49,27 @@ class ItemController {
       next(error);
     }
   }
+  async modifyItem(req, res, next) {
+    try {
+      const item = await ItemService.findById(req.params.itemId);
+      // console.log(item);
+      if (item === null) {
+        return res
+          .status(404)
+          .json({
+            found: false,
+            message: "The Item is not avilable to modify",
+          });
+      }
+      const itemData = req.body;
+      const modifiedItem = await ItemService.modifyItem(
+        req.params.itemId,
+        itemData
+      );
+      res.status(200).json(modifiedItem);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 module.exports = new ItemController();

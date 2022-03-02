@@ -1,7 +1,9 @@
-let sock;
+let sock = null;
 //Function to send notification about new order
 const sends = ({ dataValues }) => {
-  sock.emit("neworder", { who: dataValues });
+  if (sock !== null) {
+    sock.emit("neworder", { who: dataValues });
+  }
 };
 const socketLogic = (io) => {
   //initializing socket io basic configuration

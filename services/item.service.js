@@ -51,5 +51,17 @@ class ItemService {
       return error;
     }
   }
+  async modifyItem(itemId, itemData) {
+    try {
+      const which = await item.findOne({ where: { id: itemId } });
+      which.name = itemData.name || which.name;
+      which.category_id = itemData.category_id || which.category_id;
+      which.price = itemData.price || which.price;
+      const modifiedItem = await which.save();
+      return modifiedItem;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 module.exports = new ItemService();
