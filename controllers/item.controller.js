@@ -54,12 +54,10 @@ class ItemController {
       const item = await ItemService.findById(req.params.itemId);
       // console.log(item);
       if (item === null) {
-        return res
-          .status(404)
-          .json({
-            found: false,
-            message: "The Item is not avilable to modify",
-          });
+        return res.status(404).json({
+          found: false,
+          message: "The Item is not avilable to modify",
+        });
       }
       const itemData = req.body;
       const modifiedItem = await ItemService.modifyItem(

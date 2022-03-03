@@ -1,4 +1,5 @@
 const UserService = require("../services/user.service");
+const RoleService = require("../services/role.service");
 const ValidationException = require("../exceptions/validationException");
 const isAdmin = require("../utils/isAdmin.utils");
 const bcrypt = require("bcrypt");
@@ -12,9 +13,11 @@ class UserController {
         );
       }
       userData.profile_pic = req.file.path;
+      const roleId = await RoleService.findByRoleName("user");
+      const idFromDb = roleId.id || null;
       const password = await bcrypt.hash(userData.password, 10);
       userData.password = password;
-      const result = await UserService.create(userData);
+      const result = await UserService.create(userData, idFromDb);
       res.status(200).json(result);
     } catch (error) {
       next(error);

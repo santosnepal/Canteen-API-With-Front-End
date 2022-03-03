@@ -26,10 +26,15 @@ class UserService {
       return error;
     }
   }
-  async create(userData) {
+  async create(userData, roleId) {
     try {
       const savedUser = await user.create(userData);
-      const role = { user_id: savedUser.id, role_id: 4 };
+      if (roleId === null) {
+        const finalUser = await this.findByid(savedUser.id);
+        // console.log(finalUser);
+        return finalUser;
+      }
+      const role = { user_id: savedUser.id, role_id: roleId };
       await UserRoleService.create(role);
       const finalUser = await this.findByid(savedUser.id);
       // console.log(finalUser);
