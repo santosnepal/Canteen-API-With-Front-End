@@ -1,19 +1,21 @@
 "use strict";
 
+const { DATE } = require("sequelize");
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    queryInterface.bulkInsert(
-      "roles",
-      [
-        {
-          name: "admin",
-        },
-        {
-          name: "user",
-        },
-      ],
-      {}
-    );
+    queryInterface.bulkInsert("roles", [
+      {
+        name: "admin",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: "user",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+    ]);
   },
 
   async down(queryInterface, Sequelize) {
