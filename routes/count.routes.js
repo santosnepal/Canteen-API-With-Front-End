@@ -9,4 +9,25 @@ module.exports = (app) => {
       isAdmin,
       CountController.staffcount
     );
+  app
+    .route("/api/customercount")
+    .get(
+      passport.authenticate("jwt", { session: false }),
+      isAdmin,
+      CountController.customercount
+    );
+  app
+    .route("/api/itemcount")
+    .get(
+      passport.authenticate("jwt", { session: false }),
+      isAdmin,
+      CountController.itemscount
+    );
+  app
+    .route("/api/pendingordercount")
+    .get(
+      passport.authenticate("jwt", { session: false }),
+      isAdmin,
+      CountController.pendingordercount
+    );
 };
