@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+// const path = require("path");
 const cors = require("cors");
 const { sequelize } = require("./DB/index");
 const { initRoutes } = require("./routes");
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(cors());
 initRoutes(app);
+// app.use(express.static(path.join(__dirname, "../canteen_front/Front ")));
 //connecting to sequelize database
 sequelize
   .authenticate()

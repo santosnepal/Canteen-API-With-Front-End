@@ -19,6 +19,7 @@ class UserService {
             // attributes:[{exclude:['created_at','updated_at','id']}]
           },
         ],
+        attributes: ["id", "name", "profile_pic", "email"],
       });
       return users;
       //   con

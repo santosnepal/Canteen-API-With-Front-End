@@ -55,4 +55,7 @@ module.exports = (app) => {
       validator(adminSide),
       UserController.changePassword
     );
+  app
+    .route("/api/users/me")
+    .get(Passport.authenticate("jwt", { session: false }), UserController.me);
 };
