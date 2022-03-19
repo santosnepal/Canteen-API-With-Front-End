@@ -17,4 +17,10 @@ module.exports = (app) => {
       passport.authenticate("jwt", { session: false }),
       amountController.FindMyTotalCreditAmount
     );
+  app
+    .route("/api/expenses")
+    .get(
+      passport.authenticate("jwt", { session: false }),
+      amountController.TotalExpanses
+    );
 };

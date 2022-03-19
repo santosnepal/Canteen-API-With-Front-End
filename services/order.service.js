@@ -1,4 +1,4 @@
-const { order, user, item } = require("../DB/index");
+const { order, user, item, sequelize } = require("../DB/index");
 const credit_accountService = require("./credit_account.service");
 class UserService {
   async create(orderData) {
@@ -90,6 +90,49 @@ class UserService {
         where: { id: orderId },
       });
       return { success: true, message: "The Order has been removed" };
+    } catch (error) {
+      return error;
+    }
+  }
+  async getTodaysRemainingOrder() {
+    try {
+      let current_date;
+      const date = new Date().toISOString().slice(0, 10);
+      current_date = date.split("-").join("");
+      const [results, metadata] = await sequelize.query(`
+      SELECT "orders"."id", "orders"."quantity", "user"."id" AS "user_id", "user"."name" AS "user_name", "user"."profile_pic" AS "user_profile_pic","item"."id" AS "item_id", "item"."name" AS "item_name" FROM "orders" AS "orders" LEFT OUTER JOIN "users" AS "user" ON "orders"."user_id" = "user"."id" LEFT OUTER JOIN "items" AS "item" ON "orders"."item_id" = "item"."id" WHERE "orders"."status" = false AND orders.created_at::timestamp::date=TO_DATE('${current_date}','YYYYMMDD')
+      `);
+      // console.log(results);
+      return results;
+    } catch (error) {
+      // console.log(error);
+      return error;
+    }
+  }
+  async getTodaysAllOrder() {
+    try {
+      let current_date;
+      const date = new Date().toISOString().slice(0, 10);
+      current_date = date.split("-").join("");
+      const [results, metadata] = await sequelize.query(`
+      SELECT "orders"."id", "orders"."quantity","orders"."status", "user"."id" AS "user_id", "user"."name" AS "user_name", "user"."profile_pic" AS "user_profile_pic","item"."id" AS "item_id", "item"."name" AS "item_name" FROM "orders" AS "orders" LEFT OUTER JOIN "users" AS "user" ON "orders"."user_id" = "user"."id" LEFT OUTER JOIN "items" AS "item" ON "orders"."item_id" = "item"."id" WHERE  orders.created_at::timestamp::date=TO_DATE('${current_date}','YYYYMMDD')
+      `);
+      // console.log(results);
+      return results;
+    } catch (error) {
+      // console.log(error);
+      return error;
+    }
+  }
+  async getMyTodaysOrder(userid) {
+    try {
+      let current_date;
+      const date = new Date().toISOString().slice(0, 10);
+      current_date = date.split("-").join("");
+      const [results, metadata] = await sequelize.query(`
+      SELECT "orders"."id", "orders"."quantity","orders"."status", "user"."id" AS "user_id", "user"."name" AS "user_name", "user"."profile_pic" AS "user_profile_pic","item"."id" AS "item_id", "item"."name" AS "item_name" ,"item"."price" as "item_price" FROM "orders" AS "orders" LEFT OUTER JOIN "users" AS "user" ON "orders"."user_id" = "user"."id" LEFT OUTER JOIN "items" AS "item" ON "orders"."item_id" = "item"."id" WHERE "orders"."user_id"=${userid} AND "orders"."status" =false AND orders.created_at::timestamp::date=TO_DATE('${current_date}','YYYYMMDD')
+      `);
+      return results;
     } catch (error) {
       return error;
     }

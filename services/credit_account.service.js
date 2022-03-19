@@ -17,7 +17,7 @@ class CreditAccountService {
         include: [
           {
             model: order,
-            attributes: ["id", "quantity"],
+            attributes: ["id", "quantity", "updated_at"],
             include: [
               {
                 model: item,

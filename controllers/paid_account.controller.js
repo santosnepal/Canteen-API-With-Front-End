@@ -1,11 +1,17 @@
 const PaidAccountService = require("../services/paid_account.service");
+const GlobalResponse = require("../utils/globalResponse.utils");
 class PaidAccountController {
   //saved amount paid by a user only for staff and admin
   async create(req, res, next) {
     try {
       const paidData = req.body;
       const savedData = await PaidAccountService.create(paidData);
-      res.status(200).json(savedData);
+      return GlobalResponse(
+        res,
+        200,
+        "Payment Of user Recorded Successsfully",
+        savedData
+      );
     } catch (error) {
       next(error);
     }
@@ -15,7 +21,7 @@ class PaidAccountController {
     try {
       const whose = req.user.id;
       const details = await PaidAccountService.findByUserId(whose);
-      res.status(200).json(details);
+      return GlobalResponse(res, 200, "My Payment History", details);
     } catch (error) {
       next(error);
     }
@@ -25,7 +31,7 @@ class PaidAccountController {
     try {
       const whose = req.params.userId;
       const details = await PaidAccountService.findByUserId(whose);
-      res.status(200).json(details);
+      return GlobalResponse(res, 200, "His Payment History", details);
     } catch (error) {
       next(error);
     }

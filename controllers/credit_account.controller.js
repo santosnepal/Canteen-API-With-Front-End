@@ -1,4 +1,5 @@
 const CreditAccountService = require("../services/credit_account.service");
+const GlobalResponse = require("../utils/globalResponse.utils");
 class CreditAccountController {
   //create is only for testing purpose will be directly created via servie later
   async create(req, res, next) {
@@ -15,7 +16,12 @@ class CreditAccountController {
     try {
       const userId = req.user.id;
       const creditData = await CreditAccountService.findByUserId(userId);
-      res.status(200).json(creditData);
+      return GlobalResponse(
+        res,
+        200,
+        "Credit Detail Via Order History",
+        creditData
+      );
     } catch (error) {
       next(error);
     }

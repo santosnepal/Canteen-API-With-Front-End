@@ -3,6 +3,7 @@ const isAdmin = require("../middlewares/isAdmin.midlleware");
 const ItemController = require("../controllers/item.controller");
 const passport = require("passport");
 const itemSchema = require("../schemas/item.schema");
+const isAdminOrStaff = require("../middlewares/isAdminorStaff.middleware");
 module.exports = (app) => {
   //add a new Item avilable to only admin
   app
@@ -18,7 +19,7 @@ module.exports = (app) => {
     .route("/api/items/changeavilability")
     .post(
       passport.authenticate("jwt", { session: false }),
-      isAdmin,
+      isAdminOrStaff,
       ItemController.ChangeAvilability
     );
   //get all item with its category avilable to all user
@@ -27,6 +28,13 @@ module.exports = (app) => {
     .get(
       passport.authenticate("jwt", { session: false }),
       ItemController.findAll
+    );
+  //get all avilable item
+  app
+    .route("/api/items/avilable")
+    .get(
+      passport.authenticate("jwt", { session: false }),
+      ItemController.findAllAvilable
     );
   //get a item by its id with category avilable to all user
   app

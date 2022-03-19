@@ -1,5 +1,6 @@
 const OrderController = require("../controllers/order.controller");
 const isAdmin = require("../middlewares/isAdmin.midlleware");
+const isAdminOrStaff = require("../middlewares/isAdminorStaff.middleware");
 const passport = require("passport");
 const validator = require("../middlewares/validator.middleware");
 const orderSchema = require("../schemas/order.schema");
@@ -17,15 +18,38 @@ module.exports = (app) => {
     .route("/api/orders")
     .get(
       passport.authenticate("jwt", { session: false }),
-      isAdmin,
+      isAdminOrStaff,
       OrderController.getAllRemainingOrder
+    );
+  //get all todays remaining order only staff or admin
+  app
+    .route("/api/orders/today")
+    .get(
+      passport.authenticate("jwt", { session: false }),
+      isAdminOrStaff,
+      OrderController.getTodaysRemainingOrder
+    );
+  //get loginned user todays pending order
+  app
+    .route("/api/orders/today/my")
+    .get(
+      passport.authenticate("jwt", { session: false }),
+      OrderController.getMyTodaysOrder
+    );
+  //get all todays all order
+  app
+    .route("/api/orders/today/all")
+    .get(
+      passport.authenticate("jwt", { session: false }),
+      isAdminOrStaff,
+      OrderController.getTodaysAllOrder
     );
   //change order status only admin or staff
   app
     .route("/api/orders/complete/:orderId")
     .post(
       passport.authenticate("jwt", { session: false }),
-      isAdmin,
+      isAdminOrStaff,
       OrderController.changeStatus
     );
   //delete a order only by admin or orderer user

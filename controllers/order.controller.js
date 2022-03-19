@@ -1,5 +1,6 @@
 const OrderService = require("../services/order.service");
 const ItemService = require("../services/item.service");
+const GlobalResponse = require("../utils/globalResponse.utils");
 const { send } = require("../utils/notification.utils");
 const isAdmin = require("../utils/isAdmin.utils");
 const ValidationException = require("../exceptions/validationException");
@@ -26,7 +27,7 @@ class OrderController {
       const savedOrder = await OrderService.create(orderData);
       const newOrder = await OrderService.findById(savedOrder.id);
       send(newOrder);
-      res.status(200).json(savedOrder);
+      return GlobalResponse(res, 200, "Item Orderd success", newOrder);
     } catch (error) {
       next(error);
     }
@@ -41,7 +42,7 @@ class OrderController {
           .json({ status: false, message: "The order is not avilable" });
       }
       const changed = await OrderService.changeStatus(whichOrder);
-      res.status(200).json(changed);
+      return GlobalResponse(res, 200, "Order Modification success", changed);
     } catch (error) {
       next(error);
     }
@@ -49,7 +50,32 @@ class OrderController {
   async getAllRemainingOrder(req, res, next) {
     try {
       const orders = await OrderService.getAllRemainingOrder();
-      res.status(200).json(orders);
+      return GlobalResponse(res, 200, "All Remaining Order In system", orders);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getMyTodaysOrder(req, res, next) {
+    try {
+      const who = req.user.id;
+      const orders = await OrderService.getMyTodaysOrder(who);
+      return GlobalResponse(res, 200, "My Todays Pending Order", orders);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getTodaysRemainingOrder(req, res, next) {
+    try {
+      const orders = await OrderService.getTodaysRemainingOrder();
+      return GlobalResponse(res, 200, "todays Remaining Order", orders);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getTodaysAllOrder(req, res, next) {
+    try {
+      const orders = await OrderService.getTodaysAllOrder();
+      return GlobalResponse(res, 200, "todays All Order", orders);
     } catch (error) {
       next(error);
     }
@@ -80,7 +106,7 @@ class OrderController {
         console.log("is admin", isAdmin);
         console.log(which.user.id, req.user.id);
         const status = await OrderService.deletedAOreder(req.body.orderId);
-        return res.status(200).json(status);
+        return GlobalResponse(res, 200, "Order Deleted success", status);
       }
       throw new ValidationException(422, "Not Authorized", null);
     } catch (error) {
@@ -111,7 +137,7 @@ class OrderController {
       );
       const newOrder = await OrderService.findById(modifiedOrder.id);
       send(newOrder);
-      res.status(200).json(newOrder);
+      return GlobalResponse(res, 200, "Order Modfication success", newOrder);
     } catch (error) {
       console.log(error);
       next(error);

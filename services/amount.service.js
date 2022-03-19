@@ -19,5 +19,20 @@ class AmountService {
       return error;
     }
   }
+  async TotalMyExpenses(userid) {
+    try {
+      const [results, metadata] =
+        await sequelize.query(`SELECT SUM(total) from (SELECT  d.useri as userId,d.user as user,c.name as itemName , c.price as Price ,(c.price*d.quantity) as total
+        FROM items  c , (SELECT a.quantity as quantity , a.item_id as itemId,a.user_id as userId ,f.name as user,f.id as useri
+        FROM orders a, credit_account b, users f
+        WHERE a.id = b.order_id AND f.id = a.user_id
+        ) d 
+        WHERE c.id = d.itemId) long
+        where long.userId = ${userid}`);
+      return results;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 module.exports = new AmountService();

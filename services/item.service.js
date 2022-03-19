@@ -36,6 +36,21 @@ class ItemService {
       return error;
     }
   }
+  async findAllAvilable() {
+    try {
+      const items = item.findAll({
+        where: { avilability: true },
+        include: {
+          model: category,
+          attributes: ["name"],
+        },
+        attributes: ["name", "price", "avilability", "id"],
+      });
+      return items;
+    } catch (error) {
+      return error;
+    }
+  }
   async findById(iid) {
     try {
       const items = item.findOne({
