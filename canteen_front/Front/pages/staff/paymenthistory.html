@@ -9,8 +9,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>InfoDevelopers Canteen</title>
     <!-- Custom js -->
+    <script src="./js/paymenthistory.js"></script>
     <script src="./js/dashboard.js"></script>
-    <script src="./js/dashboardloader.js"></script>
     <!-- Socket-io -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
     <!-- Google Font: Source Sans Pro -->
@@ -98,7 +98,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="#" class="brand-link">
+        <a href="dashboard.html" class="brand-link">
           <img
             src="../../dist/img/AdminLTELogo.png"
             alt="AdminLTE Logo"
@@ -123,7 +123,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               />
             </div>
             <div class="info">
-              <a href="#" id="username" class="d-block"></a>
+              <a href="profile.html" id="username" class="d-block"></a>
             </div>
           </div>
           <!-- Sidebar Menu -->
@@ -137,43 +137,43 @@ scratch. This page gets rid of all links and provides the needed markup only.
             >
               <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-
-              <li class="nav-item menu-open">
-                <a href="changeavilability.html" class="nav-link">
-                  <i class="nav-icon fas fa-sum-alt"></i>
-                  <p>Change Item Avilability</p>
-                </a>
-              </li>
-              <li class="nav-item menu-open">
-                <a href="changeorderstatus.html" class="nav-link">
-                  <i class="nav-icon fas fa-sum-alt"></i>
-                  <p>Change Order Status</p>
-                </a>
-              </li>
-              <li class="nav-item menu-open">
-                <a href="addorder.html" class="nav-link">
-                  <i class="nav-icon fas fa-sum-alt"></i>
-                  <p>Place A New Order</p>
-                </a>
-              </li>
-              <li class="nav-item menu-open">
-                <a href="modifyorder.html" class="nav-link">
-                  <i class="nav-icon fas fa-sum-alt"></i>
-                  <p>Modify Exsting Order</p>
-                </a>
-              </li>
-              <li class="nav-item menu-open">
-                <a href="orderhistory.html" class="nav-link">
-                  <i class="nav-icon fas fa-sum-alt"></i>
-                  <p>Check My Order History</p>
-                </a>
-              </li>
-              <li class="nav-item menu-open">
-                <a href="paymenthistory.html" class="nav-link">
-                  <i class="nav-icon fas fa-sum-alt"></i>
-                  <p>Check My Payment History</p>
-                </a>
-              </li>
+              
+                  <li class="nav-item menu-open">
+                    <a href="changeavilability.html" class="nav-link ">
+                      <i class="nav-icon fas fa-sum-alt"></i>
+                      <p>Change Item Avilability</p>
+                    </a>
+                  </li>
+                  <li class="nav-item menu-open">
+                    <a href="changeorderstatus.html" class="nav-link ">
+                      <i class="nav-icon fas fa-sum-alt"></i>
+                      <p>Change Order Status</p>
+                    </a>
+                  </li>
+                  <li class="nav-item menu-open">
+                    <a href="addorder.html" class="nav-link ">
+                      <i class="nav-icon fas fa-sum-alt"></i>
+                      <p>Place A New Order</p>
+                    </a>
+                  </li>
+                  <li class="nav-item menu-open">
+                    <a href="modifyorder.html" class="nav-link ">
+                      <i class="nav-icon fas fa-sum-alt"></i>
+                      <p>Modify Exsting Order</p>
+                    </a>
+                  </li>
+                  <li class="nav-item menu-open">
+                    <a href="orderhistory.html" class="nav-link ">
+                      <i class="nav-icon fas fa-sum-alt"></i>
+                      <p>Check My Order History</p>
+                    </a>
+                  </li>
+                  <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+                      <i class="nav-icon fas fa-sum-alt"></i>
+                      <p>Check My Payment History</p>
+                    </a>
+                  </li>
             </ul>
           </nav>
           <!-- /.sidebar-menu -->
@@ -188,13 +188,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Dashboard</h1>
+                <h1 class="m-0"> Payment History</h1>
               </div>
               <!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active">Dashboard</li>
+                  <li class="breadcrumb-item">
+                    <a href="dashboard.html">Home</a>
+                  </li>
+                  <li class="breadcrumb-item active">Payment History</li>
                 </ol>
               </div>
               <!-- /.col -->
@@ -206,111 +208,54 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.content-header -->
 
         <!-- Main content -->
-        <button
-          hidden
-          id="launchmodel"
-          type="button"
-          class="btn btn-warning"
-          data-toggle="modal"
-          data-target="#modal-warning"
-        >
-          Launch Warning Modal
-        </button>
-        <button
-          hidden
-          type="button"
-          id="toaster"
-          class="btn btn-default toastsDefaultAutohide"
-        ></button>
-        <div class="modal fade" id="modal-warning">
-          <div class="modal-dialog">
-            <div class="modal-content bg-warning">
-              <div class="modal-header">
-                <h4 class="modal-title">Session Expired</h4>
-              </div>
-              <div class="modal-body">
-                <p>Sesion Expired Redirecting to login &hellip;</p>
-              </div>
-            </div>
-            <!-- /.modal-content -->
+        <div class="card card-default bg-info" style="height: 480px">
+          <div class="card-header">
+          <h3 class="card-title">My Payment History</h3>
           </div>
-          <!-- /.modal-dialog -->
-        </div>
+          <div id="orderbox" style="height: 400px; overflow: auto">
+            <div class="card-body">
+              <table class="table table-bordered bg-warning">
+              <thead>
+              <tr>
+              <th style="width: 10px">#</th>
+              <th style="width: 300px;">Date</th>
+              <th style="width: 300px">Amount</th>
+              </tr>
+              </thead>
+              <tbody id="itemsdata">
+              
+              </tbody>
+              </table>
+              </div>
+              
+          </div>
+          <label id="total"></label>
+          </div>
         <section class="content">
-          <div class="container-fluid">
-            <!-- Places For Small Boxes -->
-            <div class="row">
-              <!-- Small Boxes -->
-              <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                  <div class="inner">
-                    <h3 id="staffnumber">150</h3>
-
-                    <p>Total Staff</p>
-                  </div>
-                  <div class="icon">
-                    <i class="ion ion-bag"></i>
-                  </div>
-                  <a href="#" class="small-box-footer"
-                    >More info <i class="fas fa-arrow-circle-right"></i
-                  ></a>
+            <button
+            hidden
+            id="launchmodel"
+            type="button"
+            class="btn btn-warning"
+            data-toggle="modal"
+            data-target="#modal-warning"
+          >
+            Launch Warning Modal
+          </button>
+          <button hidden type="button" id="toaster" class="btn btn-default toastsDefaultAutohide">
+          </button>
+          <div class="modal fade" id="modal-warning">
+            <div class="modal-dialog">
+              <div class="modal-content bg-warning">
+                <div class="modal-header">
+                  <h4 class="modal-title">Session Expired</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Sesion Expired Redirecting to login &hellip;</p>
                 </div>
               </div>
-              <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                  <div class="inner">
-                    <h3 id="customernumber">150</h3>
-
-                    <p>Total Customer</p>
-                  </div>
-                  <div class="icon">
-                    <i class="ion ion-bag"></i>
-                  </div>
-                  <a href="#" class="small-box-footer"
-                    >More info <i class="fas fa-arrow-circle-right"></i
-                  ></a>
-                </div>
-              </div>
-              <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                  <div class="inner">
-                    <h3 id="itemsnumber">150</h3>
-
-                    <p>Total Items</p>
-                  </div>
-                  <div class="icon">
-                    <i class="ion ion-bag"></i>
-                  </div>
-                  <a href="#" class="small-box-footer"
-                    >More info <i class="fas fa-arrow-circle-right"></i
-                  ></a>
-                </div>
-              </div>
-              <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                  <div class="inner">
-                    <h3 id="ufordernumber">150</h3>
-
-                    <p>Total Unfinished Order</p>
-                  </div>
-                  <div class="icon">
-                    <i class="ion ion-bag"></i>
-                  </div>
-                  <a href="#" class="small-box-footer"
-                    >More info <i class="fas fa-arrow-circle-right"></i
-                  ></a>
-                </div>
-              </div>
-            </div>
-            <!-- Small Box end -->
-            <!-- DIRECT CHAT -->
-            <div class="card direct-chat direct-chat-primary">
-              <div class="card-header">
-                <h3 class="card-title">Pending Orders</h3>
-              </div>
-              <div id="orderbox" style="height: 400px; overflow: auto"></div>
-            </div>
-          </div>
+              <!-- /.modal-content -->
+          <div class="container-fluid"></div>
         </section>
       </div>
       <!-- /.content-wrapper -->
