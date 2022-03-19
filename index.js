@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-// const path = require("path");
+const path = require("path");
 const cors = require("cors");
 const { sequelize } = require("./DB/index");
 const { initRoutes } = require("./routes");
@@ -15,7 +15,9 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(cors());
 initRoutes(app);
-// app.use(express.static(path.join(__dirname, "../canteen_front/Front ")));
+const staticPath = path.join(__dirname, "./canteen_front/Front");
+// console.log(staticPath);
+app.use(express.static(staticPath));
 //connecting to sequelize database
 sequelize
   .authenticate()
@@ -31,6 +33,11 @@ app.get("/photos/:name", (req, res) => {
   const pd = __dirname;
   res.sendFile(`${pd}/photos/${req.params.name}`);
 });
+//serving html js
+// app.get("/static", (req, res) => {
+//   const pd = __dirname;
+//   res.sendFile(`${pd}/canteen_front/Front/index.html`);
+// });
 //handling unlisted api calls
 app.use((req, res, next) => {
   const err = new HttpException(
