@@ -88,6 +88,7 @@ function login() {
         }
         if (data.status === 200) {
           console.log("here");
+          // console.log(pwd);
           localStorage.setItem("usertoken", data.data.token);
           window.location.replace("../../index.html");
         }

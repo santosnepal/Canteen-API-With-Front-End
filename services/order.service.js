@@ -152,5 +152,27 @@ class UserService {
       return error;
     }
   }
+  async myFilteredOrder(userId, startdate, enddate) {
+    try {
+      const [results, metadata] =
+        await sequelize.query(`SELECT  users.name,users.id as userid,credit_account.id,credit_account.order_id, orders.item_id,orders.quantity,orders.updated_at
+      ,orders.quantity*items.price as total ,items.name,items.price
+      from credit_account 
+      INNER JOIN users 
+      ON users.id = credit_account.user_id
+      INNER JOIN orders 
+      ON   credit_account.user_id = ${userId} and credit_account.order_id = orders.id  
+      INNER JOIN items 
+      ON orders.item_id = items.id and orders.updated_at BETWEEN TO_DATE('${startdate}','YYYYMMDD') AND 
+      TO_DATE('${enddate}','YYYYMMDD')
+      
+      `);
+      // console.log(results);
+      return results;
+    } catch (error) {
+      // console.log(error);
+      return error;
+    }
+  }
 }
 module.exports = new UserService();

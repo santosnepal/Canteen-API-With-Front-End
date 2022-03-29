@@ -19,7 +19,14 @@ class UserService {
             // attributes:[{exclude:['created_at','updated_at','id']}]
           },
         ],
-        attributes: ["id", "name", "profile_pic", "email"],
+        attributes: [
+          "id",
+          "name",
+          "profile_pic",
+          "email",
+          "phone_no",
+          "password",
+        ],
       });
       return users;
       //   con
@@ -45,9 +52,6 @@ class UserService {
     }
   }
   async findAll() {
-    console.log("currently at ", process.cwd());
-    const pwd = `localhost:9001${process.cwd()}`;
-    console.log(pwd);
     try {
       const users = await user.findAll({
         include: [

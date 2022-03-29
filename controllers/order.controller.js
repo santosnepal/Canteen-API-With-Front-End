@@ -113,6 +113,19 @@ class OrderController {
       next(error);
     }
   }
+  async myFilteredOrder(req, res, next) {
+    try {
+      const results = await OrderService.myFilteredOrder(
+        req.user.id,
+        req.body.start,
+        req.body.end
+      );
+      // console.log(results);
+      return GlobalResponse(res, 200, "Filtered Result", results);
+    } catch (error) {
+      next(error);
+    }
+  }
   async modifyOrder(req, res, next) {
     try {
       const which = await OrderService.findById(req.params.orderId);

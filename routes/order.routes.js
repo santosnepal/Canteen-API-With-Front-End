@@ -4,6 +4,7 @@ const isAdminOrStaff = require("../middlewares/isAdminorStaff.middleware");
 const passport = require("passport");
 const validator = require("../middlewares/validator.middleware");
 const orderSchema = require("../schemas/order.schema");
+const filterSchemma = require("../schemas/filterhistory.schema");
 module.exports = (app) => {
   //create a new order any user can do it
   app
@@ -51,6 +52,14 @@ module.exports = (app) => {
       passport.authenticate("jwt", { session: false }),
       isAdminOrStaff,
       OrderController.changeStatus
+    );
+  //get filtered result
+  app
+    .route("/api/orders/history/filtered")
+    .post(
+      passport.authenticate("jwt", { session: false }),
+      validator(filterSchemma),
+      OrderController.myFilteredOrder
     );
   //delete a order only by admin or orderer user
   app

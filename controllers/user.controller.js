@@ -90,7 +90,7 @@ class UserController {
         data.profile_pic = req.file.path;
       }
       const editedUser = await UserService.editUser(userId, data);
-      return GlobalResponse(res, 200, "user Edit success", result);
+      return GlobalResponse(res, 200, "user Edit success", editedUser);
     } catch (error) {
       next(error);
     }
@@ -138,6 +138,7 @@ class UserController {
       );
       return GlobalResponse(res, 200, "Password Chnage success", editedUser);
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
