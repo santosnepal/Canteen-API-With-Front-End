@@ -1,8 +1,7 @@
 # canteen_api
 
 A Final Project From a node js Trainee at Infodevelopers Pvt Ltd.
-# project
-Is avilable in Master Branch
+
 # Running
 download the project or clone the branch and install all dependencies using npm install or yarn install
 Make a database In postgres named canteen
